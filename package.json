@@ -1,0 +1,20 @@
+{
+  "name": "workerday",
+  "version": "1.0.0",
+  "description": "School project",
+  "homepage": "https://github.com/yohansbekele12/WorkerDay#readme",
+  "bugs": {
+    "url": "https://github.com/yohansbekele12/WorkerDay/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yohansbekele12/WorkerDay.git"
+  },
+  "license": "ISC",
+  "author": "john bekele",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run"
+  }
+}
