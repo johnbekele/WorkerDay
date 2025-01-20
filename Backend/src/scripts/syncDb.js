@@ -1,6 +1,8 @@
 import sequelize from '../config/DBconfig.js';
 import defineUserModel from '../models/User.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 (async () => {
   try {
     // Define the User model
