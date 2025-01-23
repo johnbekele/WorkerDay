@@ -53,6 +53,10 @@ User.init(
         isUUID: 4,
       },
     },
+    refereshToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,

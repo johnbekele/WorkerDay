@@ -1,13 +1,8 @@
 import sequelize from '../config/DBconfig.js';
-import defineUserModel from '../models/User.js';
-import dotenv from 'dotenv';
+import User from '../models/User.js';
 
-dotenv.config();
 (async () => {
   try {
-    // Define the User model
-    const User = defineUserModel(sequelize);
-
     // Sync the database and create the table
     await sequelize.authenticate();
     console.log('Database connected successfully!');
