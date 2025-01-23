@@ -54,7 +54,7 @@ User.init(
       },
     },
     refereshToken: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(512),
       allowNull: true,
     },
   },

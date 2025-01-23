@@ -21,7 +21,6 @@ const login = async (req, res) => {
   if (!userExists) return res.status(400).json({ msg: 'User does not exist' });
 
   // Validate password
-
   const isMatch = await bcrypt.compare(password, userExists.password);
 
   if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
@@ -45,15 +44,21 @@ const login = async (req, res) => {
   });
 
   // Save refresh token to database
-  const [update] = await Users.update(
-    { refreshToken: refreshToken },
-    { where: { email: email } }
-  );
+  try {
+    const [updated] = await Users.update(
+      { refereshToken: refreshToken },
+      { where: { email: email } }
+    );
 
-  if (update === 0) {
-    return res.status(400).json({ msg: 'Error saving refresh token' });
+    if (updated === 0) {
+      console.error('Update failed: No rows affected');
+      return res.status(400).json({ msg: 'Error saving refresh token' });
+    }
+  } catch (error) {
+    console.error('Update error:', error);
+    return res.status(500).json({ msg: 'Internal server error' });
   }
-  accessToken;
+
   // Return JWT tokens
   res.cookie('jwt', refreshToken, {
     httpOnly: true,
