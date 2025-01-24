@@ -1,10 +1,8 @@
-import express from 'express';
 import Users from '../models/User.js';
-
-const app = express();
+import bycrypt from 'bcryptjs';
 
 const getAllEmployees = async (req, res) => {
-  const employees = await User.findAll();
+  const employees = await Users.findAll();
   res.json(employees);
 };
 
@@ -23,10 +21,11 @@ const addEmployee = async (req, res) => {
   if (userExists) return res.status(409).send('User already exists');
 
   try {
+    const hashedPassword = await bycrypt.hash(password, 10);
     const user = await Users.create({
       name: username,
       email: email,
-      password: password,
+      password: hashedPassword,
       role: role,
       manager_id: req.manager_id,
     });
@@ -47,7 +46,7 @@ const updateEmployee = async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    const [update] = await user.update({
+    await user.update({
       username,
       email,
       password,
@@ -55,11 +54,7 @@ const updateEmployee = async (req, res) => {
       manager_id: req.manager_id,
     });
 
-    if (update === 0) {
-      return res.status(400).send('User not updated');
-    }
-    res.status(200).send('User updated');
-    res.json(user);
+    res.status(200).send({ msg: 'User updated', user });
   } catch (err) {
     console.error('Error updating user:', err);
     res.status(500).json({ msg: 'Internal server error' });
@@ -85,4 +80,4 @@ const deleteEmployee = async (req, res) => {
     res.status(500).json({ msg: 'Internal server error' });
   }
 };
-export default { getAllEmployees, addEmployee };
+export default { getAllEmployees, addEmployee, updateEmployee, deleteEmployee };

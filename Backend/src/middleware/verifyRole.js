@@ -1,20 +1,39 @@
-import express from 'express';
-
 const Admin = (req, res, next) => {
-  const { user } = req;
-  if (user.role !== 'Admin') {
-    return res.status(403).json({ error: 'Forbidden' });
+  console.log('Manager Middleware - User:', req.user); // Debug log
+  try {
+    const { user } = req;
+    if (!user) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
+    if (user.role !== 'Admin') {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
   }
-  next();
 };
 
 const Manager = (req, res, next) => {
-  const { user } = req;
-  if (user.role !== 'Manager') {
-    return res.status(403).json({ error: 'Forbidden' });
+  const { user } = req.user;
+  console.log('Manager Middleware - User:', req.user); // Debug log
+  console.log('Manager Middleware - User:', user.id);
+  try {
+    if (!user) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
+    if (user.role !== 'Manager') {
+      return res.status(403).json({
+        error:
+          'Forbidden to access this resource .please requeste for  admin or manager access or authorization ',
+        role: user.role,
+      });
+    }
+    req.manager_id = user.id;
+    next();
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
   }
-  req.manager_id = user.id;
-  next();
 };
 
 export { Admin, Manager };

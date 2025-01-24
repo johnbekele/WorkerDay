@@ -7,8 +7,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(verifyJWT, employeesController.getAllEmployees)
-  .post(verifyJWT, employeesController.addEmployee)
+  .get(verifyJWT, Manager, employeesController.getAllEmployees)
+  .post(verifyJWT, Manager, employeesController.addEmployee)
   .put(verifyJWT, Manager, employeesController.updateEmployee)
   .delete(verifyJWT, Admin, employeesController.deleteEmployee);
 

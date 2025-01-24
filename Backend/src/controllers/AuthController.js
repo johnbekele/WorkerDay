@@ -70,4 +70,9 @@ const login = async (req, res) => {
   res.json({ accessToken });
 };
 
-export default login;
+const logout = (req, res) => {
+  res.clearCookie('jwt');
+  res.json({ msg: 'Logged out' });
+};
+
+export default { login, logout };
