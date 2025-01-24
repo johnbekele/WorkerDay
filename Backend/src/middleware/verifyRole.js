@@ -36,4 +36,12 @@ const Manager = (req, res, next) => {
   }
 };
 
-export { Admin, Manager };
+const AdminOrManager = (req, res, next) => {
+  const { user } = req.user;
+  if (user.role !== 'Admin' && user.role !== 'Manager') {
+    return res.status(403).json({ error: 'Forbidden', role: user.role });
+  }
+  next();
+};
+
+export { Admin, Manager, AdminOrManager };

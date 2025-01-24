@@ -1,5 +1,6 @@
 import Users from '../models/User.js';
 import bycrypt from 'bcryptjs';
+import chalk from 'chalk';
 
 const getAllEmployees = async (req, res) => {
   const employees = await Users.findAll();
@@ -63,8 +64,10 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   const { id } = req.params;
+  const userid = id.split(':')[1].trim();
+  console.log(chalk.blue('Deleting employee with id:', userid));
   try {
-    const user = await Users.findByPk(id);
+    const user = await Users.findByPk(userid);
 
     if (!user) {
       return res.status(404).send('User not found');
