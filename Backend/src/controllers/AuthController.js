@@ -37,7 +37,7 @@ const login = async (req, res) => {
 
   // Sign token
   const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: 360000,
+    expiresIn: '15m',
   });
   const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: 360000,
@@ -62,7 +62,7 @@ const login = async (req, res) => {
   // Return JWT tokens
   res.cookie('jwt', refreshToken, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000,
   });
@@ -71,7 +71,12 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie('jwt');
+  // delete JWT token from the cookie
+  res.clearCookie('jwt', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // secure flag matches the enviroment
+    sameSite: 'none',
+  });
   res.json({ msg: 'Logged out' });
 };
 

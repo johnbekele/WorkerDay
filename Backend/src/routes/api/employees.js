@@ -15,4 +15,6 @@ router
   .put(verifyJWT, Manager, employeesController.updateEmployee)
   .delete(verifyJWT, AdminOrManager, employeesController.deleteEmployee);
 
+router.route('/admin').get(verifyJWT, Admin, employeesController.getAllUsers);
+
 export default router;

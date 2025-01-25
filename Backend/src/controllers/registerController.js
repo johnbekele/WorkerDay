@@ -11,7 +11,6 @@ app.set('view engine', 'ejs');
 
 const AddUser = async (req, res) => {
   const { username, email, password, role, manager_email } = req.body;
-  console.log(req.body);
 
   //check filled input
   if (!username || !email || !password || !role)

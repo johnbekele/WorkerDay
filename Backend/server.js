@@ -5,6 +5,7 @@ import register from './src/routes/register.js';
 import bodyParser from 'body-parser';
 import Auth from './src/routes/Auth.js';
 import employees from './src/routes/api/employees.js';
+import request from './src/routes/api/request.js';
 
 dotenv.config();
 
@@ -23,6 +24,10 @@ app.use('/api/auth', Auth);
 //resorce routes
 
 app.use('/api/employees', employees);
+
+//request routes
+
+app.use('/api/requests', request);
 
 (async () => {
   try {

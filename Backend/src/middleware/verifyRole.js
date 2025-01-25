@@ -1,7 +1,7 @@
 const Admin = (req, res, next) => {
   console.log('Manager Middleware - User:', req.user); // Debug log
   try {
-    const { user } = req;
+    const user = req.user;
     if (!user) {
       return res.status(401).json({ error: 'User not authenticated' });
     }
@@ -15,7 +15,7 @@ const Admin = (req, res, next) => {
 };
 
 const Manager = (req, res, next) => {
-  const { user } = req.user;
+  const user = req.user;
   console.log('Manager Middleware - User:', req.user); // Debug log
   console.log('Manager Middleware - User:', user.id);
   try {
