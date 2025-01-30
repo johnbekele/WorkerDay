@@ -1,7 +1,7 @@
 import express from 'express';
 import requestController from '../../controllers/requestController.js';
 import verifyJWT from '../../middleware/verifyJwt.js';
-import { Admin, Manager, AdminOrManager } from '../../middleware/verifyRole.js';
+import { Admin, Manager, Employee } from '../../middleware/verifyRole.js';
 
 const router = express.Router();
 
@@ -26,12 +26,14 @@ router.route('/admin/:id').post(Admin, requestController.respondRequest);
 
 //Employees routes
 
-router.route('/').post(verifyJWT, requestController.createEmployeeRequest);
+router
+  .route('/employee')
+  .post(Employee, requestController.createEmployeeRequest);
 
 router
   .route('/:id')
-  .get(verifyJWT, requestController.getRequestById)
-  .put(verifyJWT, requestController.updateRequest);
+  .get(Employee, requestController.getRequestById)
+  .put(Employee, requestController.updateRequest);
 
 // Rout with parameters
 

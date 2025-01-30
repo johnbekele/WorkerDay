@@ -1,7 +1,7 @@
 import sequelize from '../config/DBconfig.js';
 import User from '../models/User.js';
 import Request from '../models/requestModel.js';
-
+import Ticket from '../models/ticket.js';
 (async () => {
   try {
     // Sync the database and create the table

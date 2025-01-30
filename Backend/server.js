@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import Auth from './src/routes/Auth.js';
 import employees from './src/routes/api/employees.js';
 import request from './src/routes/api/request.js';
+import ticket from './src/routes/api/ticket.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use('/api/employees', employees);
 //request routes
 
 app.use('/api/requests', request);
+app.use('/api/ticket', ticket);
 
 (async () => {
   try {

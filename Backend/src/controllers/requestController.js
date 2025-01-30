@@ -3,8 +3,7 @@ import chalk from 'chalk';
 import { Op } from 'sequelize';
 import User from '../models/User.js';
 
-// Get all requests for a Admin and manager
-
+// Get all requests for an Admin and manager
 const getAllRequests = async (req, res) => {
   const managerId = req.user.id;
   const role = req.user.role;
@@ -37,7 +36,6 @@ const getAllRequests = async (req, res) => {
 };
 
 // Get a single request by ID
-
 const getRequestById = async (req, res) => {
   const { id } = req.params;
 
@@ -53,7 +51,7 @@ const getRequestById = async (req, res) => {
   }
 };
 
-// Create a new Mnager request
+// Create a new Manager request
 const createManagerRequest = async (req, res) => {
   const { employeeEmail, requestType, reason } = req.body;
   const managerId = req.user.id;
@@ -80,8 +78,7 @@ const createManagerRequest = async (req, res) => {
   }
 };
 
-//create a new employee request
-
+// Create a new employee request
 const createEmployeeRequest = async (req, res) => {
   const { requestType, reason, manager_email } = req.body;
 
@@ -100,9 +97,6 @@ const createEmployeeRequest = async (req, res) => {
       return res.status(404).json({ msg: 'Manager not found' });
     }
 
-    // Log the manager data for debugging
-    console.log(manager.toJSON()); // Make sure you get the actual manager data
-
     // Assuming req.user.id is set properly by some authentication middleware
     if (!req.user || !req.user.id) {
       return res
@@ -110,12 +104,11 @@ const createEmployeeRequest = async (req, res) => {
         .json({ msg: 'Invalid user. Please log in first.' });
     }
 
-    // Create the new request in the database
     const newRequest = await Request.create({
       requester_role: 'Employee',
-      employeeId: req.user.id, // Make sure the field name matches the model
-      managerId: manager.id, // Make sure the field name matches the model
-      requestType: requestType, // Ensure this matches the column name in the model
+      employeeId: req.user.id,
+      managerId: manager.id,
+      requestType: requestType,
       reason: reason,
     });
 
@@ -124,16 +117,12 @@ const createEmployeeRequest = async (req, res) => {
       newRequest,
     });
   } catch (error) {
-    // Log the error with more details for debugging
     console.error(chalk.red(error));
-
-    // Send a response with a more generic error message
     res.status(500).json({ msg: 'Server error, unable to create the request' });
   }
 };
 
 // Update request
-
 const updateRequest = async (req, res) => {
   const { requestType, reason } = req.body;
   const { requestId } = req.params;
@@ -158,20 +147,18 @@ const updateRequest = async (req, res) => {
   }
 };
 
-//respond to  request
-
+// Respond to request
 const respondRequest = async (req, res) => {
   const { response } = req.body;
-  const { requestId } = req.params;
+  const { id } = req.params;
+  const requestId = id.split(':')[1].trim();
   const approverId = req.user.id;
 
-  const request = await Request.findByPk(requestId); //find the request object
+  const request = await Request.findByPk(requestId); // Find the request object
 
   if (!request) return res.status(404).json({ msg: 'Request not found' });
   if (request.status !== 'pending')
     return res.status(400).json({ msg: 'Request already processed' });
-
-  //update request status
 
   try {
     const updatedRequest = await request.update({
@@ -188,8 +175,6 @@ const respondRequest = async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 };
-
-//
 
 export default {
   getAllRequests,
