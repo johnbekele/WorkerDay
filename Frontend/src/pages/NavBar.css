@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navBarItem {
+  font-size: 14px;
+  color: var(--text-grey-color);
+  font-family: "Fira Code", monospace;
+}
+
+.navBarItem li a {
+  font-family: "Fira Code", monospace;
+}
+
+.navBarItem li a:hover {
+  animation-name: changeNavItemColor;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+@keyframes changeNavItemColor {
+  to {
+    color: var(--text-green-color);
+  }
+}
+
+.navBarItem span {
+  color: var(--text-green-color);
+}
+
+.ui {
+  background-color: rgb(2, 6, 23);
+  font-family: "Fira Code", monospace;
+}
+
+.Container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgb(2, 6, 23);
+  font-family: "Fira Code", monospace;
+}
