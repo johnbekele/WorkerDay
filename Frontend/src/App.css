@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&family=Ubuntu:wght@300;400;700&family=Fira+Code:wght@300;400;500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .clip-your-needful-style {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 6vw));
+  }
+}
+
+:root {
+  --main-bg-color: #0a192f;
+  --dim-main-bg-color: #071120;
+  --text-green-color: #64ffda;
+  --text-grey-color: #8892af;
+  --tinted-green-color: rgba(100, 255, 218, 0.1);
+  --grey-color-1: #ccd6f6;
+  --grey-color-2: #8892b0;
+  --grey-color-3: #a1b5cd;
+  --gentle-blue: #b0cdf1;
+  --dim-blue: #12213e;
+  --lighter-blue: #162b52;
+  --main-font: "Ubuntu";
+  --secondary-font: "Fira Code", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  color: var(--text-grey-color);
+  font-family: var(--main-font);
+}
+
+.App {
+  background-color: var(--main-bg-color);
+}
+.sectionContainer {
+  height: 65vh;
+  width: 60%;
+  margin: auto auto;
+  padding-top: 6%;
+  z-index: 9999;
+}
+
+.sectionTitle {
+  color: var(--gentle-blue);
+  margin-bottom: 50px;
+}
+
+.font-main {
+  font-family: "Fira Code", monospace;
+}
+.font-special {
+  color: var(--text-green-color);
+}
+
+/* custome button styles */
+.outlinedBtn {
+  background-color: transparent;
+  border: 1px solid var(--text-green-color);
+  border-radius: 5px;
+  padding: 8px 30px;
+  color: var(--text-green-color);
+  font-family: var(--secondary-font);
+}
+
+.outlinedBtn:hover {
+  background-color: var(--tinted-green-color);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  color: var(--text-grey-color);
+  font-family: var(--main-font);
+}
+
+.linkText {
+  color: var(--text-green-color);
+}
+.linkText a {
+  color: var(--text-green-color);
+}
+
+.linkText:hover a {
+  text-decoration: underline;
+}
+
+.outlinedBtn {
+  background-color: transparent;
+  border: 1px solid var(--text-green-color);
+  border-radius: 5px;
+  padding: 8px 30px;
+  color: var(--text-green-color);
+  font-family: var(--secondary-font);
+}
+
+.outlinedBtn:hover {
+  background-color: var(--tinted-green-color);
+}
+
+.sectionContainer {
+  height: 65vh;
+  width: 60%;
+  margin: auto auto;
+  padding-top: 6%;
+  z-index: 9999;
+}
+
+.sectionTitle {
+  color: var(--gentle-blue);
+  margin-bottom: 50px;
+}
+
+.horizontalLine {
+  width: 70%;
+  height: 1px;
+  background-color: var(--gentle-blue);
+  margin-top: 15px;
+  opacity: 0.2;
+}
+
+.flexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.H-image {
+  height: 80vh;
+}
+
+.TR {
+  font-family: "Poppins", sans-serif;
+}
