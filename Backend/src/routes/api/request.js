@@ -31,7 +31,7 @@ router
   .post(Employee, requestController.createEmployeeRequest);
 
 router
-  .route('/:id')
+  .route('/employee/:id')
   .get(Employee, requestController.getRequestById)
   .put(Employee, requestController.updateRequest);
 

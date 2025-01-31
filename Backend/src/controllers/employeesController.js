@@ -18,6 +18,13 @@ const getAllEmployees = async (req, res) => {
   res.json(employees);
 };
 
+const getEmployeeById = async (req, res) => {
+  const id = req.user.id;
+  const employee = await Users.findByPk(id);
+  if (!employee) return res.status(404).json({ msg: 'Employee not found' });
+  res.json(employee);
+};
+
 const addEmployee = async (req, res) => {
   const { username, email, password, role, manager_email } = req.body;
 
@@ -125,4 +132,5 @@ export default {
   addEmployee,
   updateEmployee,
   deleteEmployee,
+  getEmployeeById,
 };

@@ -17,4 +17,6 @@ router
 
 router.route('/admin').get(verifyJWT, Admin, employeesController.getAllUsers);
 
+router.route('/myprofile').get(verifyJWT, employeesController.getEmployeeById);
+
 export default router;

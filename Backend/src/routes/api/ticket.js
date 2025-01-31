@@ -6,7 +6,7 @@ import { Admin, Manager, Employee } from '../../middleware/verifyRole.js';
 const router = express.Router();
 
 router
-  .route('/ticket')
+  .route('/')
   .get(verifyJWT, ticketController.getAllTicket)
   .post(verifyJWT, ticketController.createTicket);
 

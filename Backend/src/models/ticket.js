@@ -7,15 +7,14 @@ class Ticket extends Model {}
 
 Ticket.init(
   {
-    // Case Number (ID)
-    caseNumber: {
+    // Existing fields...
+    case_number: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
 
-    // Subject
     subject: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -26,8 +25,7 @@ Ticket.init(
       },
     },
 
-    // Record Type
-    recordType: {
+    record_type: {
       type: DataTypes.ENUM(
         'Tech Support',
         'Request for Action',
@@ -42,8 +40,7 @@ Ticket.init(
       },
     },
 
-    // Product Segment
-    productSegment: {
+    product_segment: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -53,11 +50,9 @@ Ticket.init(
       },
     },
 
-    // Client ID
-    clientId: {
+    client_id: {
       type: DataTypes.UUID,
       allowNull: false,
-
       validate: {
         notNull: {
           msg: 'Client ID is required',
@@ -65,7 +60,16 @@ Ticket.init(
       },
     },
 
-    // Additional useful fields
+    // New assigned_to field
+    assigned_to: {
+      type: DataTypes.UUID,
+      allowNull: true, // Can be null
+      references: {
+        model: 'users', // References the users table
+        key: 'id',
+      },
+    },
+
     status: {
       type: DataTypes.ENUM('Open', 'In Progress', 'Closed', 'On Hold'),
       defaultValue: 'Open',
@@ -78,19 +82,19 @@ Ticket.init(
       allowNull: false,
     },
 
-    createdAt: {
+    created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
       allowNull: false,
     },
 
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
       allowNull: false,
     },
 
-    closedAt: {
+    closed_at: {
       type: DataTypes.DATE,
       allowNull: true,
     },
@@ -99,28 +103,37 @@ Ticket.init(
     sequelize,
     modelName: 'Ticket',
     tableName: 'tickets',
-    timestamps: true, // This will automatically manage createdAt and updatedAt
+    timestamps: true,
     hooks: {
       beforeCreate: (ticket, options) => {
-        // You could add custom logic here, like generating a custom case number format
+        // Your custom logic here
       },
     },
     indexes: [
       {
         unique: true,
-        fields: ['caseNumber'],
+        fields: ['case_number'],
       },
       {
-        fields: ['clientId'],
+        fields: ['client_id'],
       },
       {
         fields: ['status'],
       },
       {
-        fields: ['recordType'],
+        fields: ['record_type'],
+      },
+      {
+        fields: ['assigned_to'],
       },
     ],
   }
 );
+
+// Add association with User model
+Ticket.belongsTo(User, {
+  foreignKey: 'assigned_to',
+  as: 'assigned_user',
+});
 
 export default Ticket;
