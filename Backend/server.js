@@ -6,11 +6,14 @@ import bodyParser from 'body-parser';
 import Auth from './src/routes/Auth.js';
 import employees from './src/routes/api/employees.js';
 import request from './src/routes/api/request.js';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

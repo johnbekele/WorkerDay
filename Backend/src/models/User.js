@@ -53,7 +53,7 @@ User.init(
         isUUID: 4,
       },
     },
-    refereshToken: {
+    refreshToken: {
       type: DataTypes.STRING(512),
       allowNull: true,
     },
