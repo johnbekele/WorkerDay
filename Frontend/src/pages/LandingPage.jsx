@@ -7,6 +7,7 @@ import { Button } from "../Components/ui/moving-border";
 import NavBar from "./NavBar";  
 import About from "./About";    
 import PropTypes from "prop-types"; 
+import RegistrationForm from "./RegistrationForm";
 
 export default function LandingPage({setIsAuthenticated}) {
   const [currentSection, setCurrentSection] = useState("");
@@ -55,6 +56,10 @@ export default function LandingPage({setIsAuthenticated}) {
       {/* ✅ About Section */}
       <div id="about">
         <About />
+      </div>
+      {/* ✅ RegistrationForm Section */}
+      <div id="signup">
+        <RegistrationForm />
       </div>
     </div>
   );
