@@ -1,6 +1,4 @@
-Here's a simplified version of your project README without using markdown:
 
----
 
 # Workery Day - User Management Dashboard
 
