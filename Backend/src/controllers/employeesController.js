@@ -8,7 +8,13 @@ const getAllUsers = async (req, res) => {
 };
 
 const getAllEmployees = async (req, res) => {
-  const employees = await Users.findOne({ where: { role: 'Employee' } });
+  const manager_id = req.user.id;
+  const employees = await Users.findAll({
+    where: {
+      role: 'Employee',
+      manager_id: manager_id,
+    },
+  });
   res.json(employees);
 };
 
@@ -92,7 +98,7 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   const { id } = req.params;
-  const userid = id.split(':')[1].trim();
+  const userid = id;
 
   console.log(chalk.blue('Deleting employee with id:', userid));
   try {

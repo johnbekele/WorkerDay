@@ -17,6 +17,9 @@
   "scripts": {
     "test": "npm start"
   },
+  "sequelize": {
+    "config": "config/config.js"
+  },
   "dependencies": {
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",

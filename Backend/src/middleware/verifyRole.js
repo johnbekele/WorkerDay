@@ -59,7 +59,7 @@ const Manager = (req, res, next) => {
 };
 
 const AdminOrManager = (req, res, next) => {
-  const { user } = req.user;
+  const user = req.user;
   if (user.role !== 'Admin' && user.role !== 'Manager') {
     return res.status(403).json({ error: 'Forbidden', role: user.role });
   }

@@ -6,13 +6,13 @@ import { Admin, Manager, AdminOrManager } from '../../middleware/verifyRole.js';
 const router = express.Router();
 
 router
-  .route('/')
+  .route('/manager')
   .get(verifyJWT, Manager, employeesController.getAllEmployees)
   .post(verifyJWT, Manager, employeesController.addEmployee);
 
 router
   .route('/:id')
-  .put(verifyJWT, Manager, employeesController.updateEmployee)
+  .put(verifyJWT, AdminOrManager, employeesController.updateEmployee)
   .delete(verifyJWT, AdminOrManager, employeesController.deleteEmployee);
 
 router.route('/admin').get(verifyJWT, Admin, employeesController.getAllUsers);

@@ -151,7 +151,7 @@ const updateRequest = async (req, res) => {
 const respondRequest = async (req, res) => {
   const { response } = req.body;
   const { id } = req.params;
-  const requestId = id.split(':')[1].trim();
+  const requestId = id;
   const approverId = req.user.id;
 
   const request = await Request.findByPk(requestId); // Find the request object

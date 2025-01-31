@@ -22,7 +22,15 @@ User.init(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    alias: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    surname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -33,6 +41,21 @@ User.init(
       validate: {
         isEmail: true,
       },
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isNumeric: true,
+      },
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    otherDetails: {
+      type: DataTypes.JSON,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -53,7 +76,7 @@ User.init(
         isUUID: 4,
       },
     },
-    refereshToken: {
+    refreshToken: {
       type: DataTypes.STRING(512),
       allowNull: true,
     },

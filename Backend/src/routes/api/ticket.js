@@ -1,5 +1,5 @@
 import express from 'express';
-import ticketController from '../../controllers/ticketController';
+import ticketController from '../../controllers/ticketController.js';
 import verifyJWT from '../../middleware/verifyJwt.js';
 import { Admin, Manager, Employee } from '../../middleware/verifyRole.js';
 
@@ -13,6 +13,6 @@ router
 router
   .route('/ticket/:id')
   .put(verifyJWT, ticketController.updateTicket)
-  .delete(verifyJWT, AdminOrManager, ticketController.deleteTicket);
+  .delete(verifyJWT, Admin, ticketController.deleteTicket);
 
 export default router;

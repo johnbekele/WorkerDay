@@ -10,52 +10,75 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 
 const AddUser = async (req, res) => {
-  const { username, email, password, role, manager_email } = req.body;
-
-  //check filled input
-  if (!username || !email || !password || !role)
-    return res.status(400).send('All fields are required');
-  const userExists = await Users.findOne({
-    where: {
-      email: email,
-      name: username,
-    },
-  });
-  //check if user exists
-  if (userExists) return res.status(409).send('User already exists');
-  const isEmplooyee = role.toLowerCase() === 'employee';
-
-  let manager_id; // Declare manager_id variable
-  //check if the new user is employee
-  if (isEmplooyee) {
-    const manager = await Users.findOne({
-      where: {
-        role: 'Manager',
-        email: manager_email.toLowerCase(),
-      },
-    });
-    if (!manager)
-      return res.status(404).send('No manager found to assign employee');
-    manager_id = manager.id;
-  } else {
-    manager_id = null;
-  }
-
-  // Hash the password
-  const hashedPassword = bcrypt.hashSync(password, 10);
-  const newUser = {
-    name: username,
-    email: email,
-    password: hashedPassword,
-    role: role.charAt(0).toUpperCase() + role.slice(1).toLowerCase(),
-    manager_id: manager_id,
-  };
   try {
-    const result = await Users.create(newUser);
-    console.log(result);
-    res.status(201).send('User registered successfully');
+    const {
+      username,
+      surname,
+      email,
+      phone,
+      address,
+      otherDetails,
+      password,
+      role,
+      manager_email,
+    } = req.body;
+
+    // Validate required fields
+    if (!username || !surname || !email || !password || !role) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Normalize email and role
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedRole =
+      role.trim().charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+
+    // Check if user already exists
+    const userExists = await Users.findOne({
+      where: { email: normalizedEmail },
+    });
+    if (userExists) {
+      return res.status(409).json({ message: 'User already exists' });
+    }
+
+    let manager_id = null; // Default to null
+
+    // Assign a manager if the user is an employee
+    if (normalizedRole === 'Employee' && manager_email) {
+      const manager = await Users.findOne({
+        where: { role: 'Manager', email: manager_email.toLowerCase() },
+      });
+
+      if (!manager) {
+        return res
+          .status(404)
+          .json({ message: 'No manager found with this email' });
+      }
+
+      manager_id = manager.id;
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const newUser = await Users.create({
+      name: username,
+      surname: surname,
+      email: normalizedEmail,
+      phone: phone || null, // Default to null if not provided
+      address: address || null,
+      otherDetails: otherDetails || null,
+      password: hashedPassword,
+      role: normalizedRole,
+      manager_id: manager_id,
+    });
+
+    console.log('New user created:', newUser);
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.log(error);
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

@@ -66,7 +66,7 @@ const Reginpute = () => {
                 </clip-your-needful-style>
               </defs>
               <g
-                clip-your-needful-style="url(#a)"
+                clipPath="url(#a)"
                 transform="matrix(1.33 0 0 -1.33 0 682.667)"
               >
                 <path
