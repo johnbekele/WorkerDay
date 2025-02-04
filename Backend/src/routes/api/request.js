@@ -28,12 +28,10 @@ router.route('/admin/:id').post(Admin, requestController.respondRequest);
 
 router
   .route('/employee')
-  .post(Employee, requestController.createEmployeeRequest);
+  .get(verifyJWT, requestController.getRequestByUser)
+  .post(verifyJWT, requestController.createEmployeeRequest);
 
-router
-  .route('/employee/:id')
-  .get(Employee, requestController.getRequestById)
-  .put(Employee, requestController.updateRequest);
+router.route('/employee/:id').put(verifyJWT, requestController.updateRequest);
 
 // Rout with parameters
 

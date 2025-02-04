@@ -7,7 +7,12 @@
   .clip-your-needful-style {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 6vw));
   }
+   .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
 }
+
+
 
 :root {
   --main-bg-color: #0a192f;

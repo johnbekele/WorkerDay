@@ -1,6 +1,18 @@
 import Ticket from '../models/ticket.js';
 import User from '../models/User.js';
 
+const getTicketbyId = async (req, res) => {
+  const id = req.user.id;
+  try {
+    const ticket = await Ticket.findAll({ where: { employeeid: id } });
+    if (!ticket) {
+      return res.status(404).json({ message: 'Ticket not found' });
+    }
+    res.json(ticket);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 const getAllTicket = async (req, res) => {
   const role = req.user.role;
   const id = req.user.id;
@@ -112,4 +124,10 @@ const deleteTicket = async (req, res) => {
   }
 };
 
-export default { getAllTicket, createTicket, deleteTicket, updateTicket };
+export default {
+  getTicketbyId,
+  getAllTicket,
+  createTicket,
+  deleteTicket,
+  updateTicket,
+};

@@ -7,6 +7,7 @@ import Auth from './src/routes/Auth.js';
 import employees from './src/routes/api/employees.js';
 import request from './src/routes/api/request.js';
 import ticket from './src/routes/api/ticket.js';
+import learning from './src/routes/api/learning.js';
 import cors from 'cors';
 
 dotenv.config();
@@ -33,6 +34,7 @@ app.use('/api/employees', employees);
 
 app.use('/api/requests', request);
 app.use('/api/ticket', ticket);
+app.use('/api/learning', learning);
 
 (async () => {
   try {

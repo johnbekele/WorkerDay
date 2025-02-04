@@ -35,6 +35,20 @@ const getAllRequests = async (req, res) => {
   }
 };
 
+const getRequestByUser = async (req, res) => {
+  const id = req.user.id;
+
+  try {
+    const requests = await Request.findAll({ where: { employeeId: id } });
+    if (!requests || requests.length == 0) {
+      return res.status(404).json({ msg: 'No requests found' });
+    }
+    return res.status(200).json(requests);
+  } catch (err) {
+    console.error(chalk.red(err));
+    res.status(500).json({ msg: 'Server error' });
+  }
+};
 // Get a single request by ID
 const getRequestById = async (req, res) => {
   const { id } = req.params;
@@ -178,6 +192,7 @@ const respondRequest = async (req, res) => {
 
 export default {
   getAllRequests,
+  getRequestByUser,
   getRequestById,
   createManagerRequest,
   createEmployeeRequest,

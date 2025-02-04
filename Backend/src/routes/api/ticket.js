@@ -11,7 +11,12 @@ router
   .post(verifyJWT, ticketController.createTicket);
 
 router
-  .route('/ticket/:id')
+  .route('/employee')
+  .get(verifyJWT, ticketController.getTicketbyId)
+  .post(verifyJWT, ticketController.createTicket);
+
+router
+  .route('/:id')
   .put(verifyJWT, ticketController.updateTicket)
   .delete(verifyJWT, Admin, ticketController.deleteTicket);
 
