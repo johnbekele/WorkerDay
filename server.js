@@ -39,7 +39,9 @@ app.use('/api/learning', learning);
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    console.log('Postgress Connection has been established successfully.');
+    await sequelize.sync({ alter: true });
+    console.log("Data sync succesfully  ");
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
