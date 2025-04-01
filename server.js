@@ -16,7 +16,7 @@ import fs from 'fs';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const httpsPort = process.env.HTTPS_PORT || 8443;
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
