@@ -20,14 +20,33 @@ const port = process.env.PORT || 3000;
 const httpsPort = process.env.HTTPS_PORT || 8443;
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
+
+// Allowed origins
+const allowedOrigins = [
+  'https://worker-day-frontend-iihu8q46r-yohans-bekeles-projects.vercel.app',
+  'https://workersday.zapto.org',
+  'http://workersday.zapto.org',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
 // CORS configuration
 app.use(cors({
-  origin: isDevelopment 
-    ? 'http://localhost:5173' 
-    : ['https://workersday.zapto.org', 'http://workersday.zapto.org'],
-  credentials: true,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(null, false);
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  maxAge: 86400 // 24 hours
 }));
 
 // Security headers in production
